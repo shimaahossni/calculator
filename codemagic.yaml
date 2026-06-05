@@ -12,8 +12,11 @@ workflows:
       - name: Run tests
         script: flutter test
       - name: Build IPA
-        script: flutter build ipa --release --no-codesign
+        script: |
+          flutter build ipa --release --no-codesign
+          find . -name "*.ipa" | xargs -I{} cp {} build/
     artifacts:
+      - build/*.ipa
       - build/ios/ipa/*.ipa
     publishing:
       email:
